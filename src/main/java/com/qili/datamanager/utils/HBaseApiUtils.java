@@ -62,7 +62,7 @@ public class HBaseApiUtils {
      * 创建表结构
      * @throws IOException
      */
-    public static void createSchemaTables(HbaseTableInfo hbaseTableInfo) throws IOException {
+    public static boolean createSchemaTables(HbaseTableInfo hbaseTableInfo) throws IOException {
         Admin admin = init(zkQuorum, zkZnode, zkPort);
 
         //校验表结构是否存在
@@ -77,9 +77,9 @@ public class HBaseApiUtils {
         TableDescriptorBuilder tableDesBuilder = TableDescriptorBuilder.newBuilder(tableName);
         if (hbaseTableInfo.getColumnFamilyName() != null) {
             COLUMN_FAMILY_NAMES.add(hbaseTableInfo.getColumnFamilyName());
-        }else{
+        } else {
             // 默认给一个列族名称
-            String familyName ="cf";
+            String familyName = "cf";
             COLUMN_FAMILY_NAMES.add(familyName);
         }
         for (String familyName : COLUMN_FAMILY_NAMES) {
@@ -96,6 +96,7 @@ public class HBaseApiUtils {
 
         // 关闭连接
         close();
+        return true;
     }
 
 
