@@ -1,0 +1,32 @@
+# 端口号配置
+server:
+  port: 8000
+spring:
+  application:
+    name: data-manager
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:mysql://114.115.138.227:3306/datamanager?useUnicode=true&characterEncoding=utf-8&useSSL=true
+    username: root
+    password: 123456
+    druid:
+      max-active: 20
+      max-wait: 20000
+      min-idle: 1
+      stat-view-servlet:
+        enabled: false
+      web-stat-filter:
+        enabled: false
+  jpa:
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+        use_sql_comments: false
+        ddl-auto: none
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
