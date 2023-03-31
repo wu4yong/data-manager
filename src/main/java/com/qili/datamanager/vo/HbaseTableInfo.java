@@ -3,6 +3,8 @@ package com.qili.datamanager.vo;
 
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.Date;
+
 /**
  * @Author: wuyong
  * @Description: Hbase Java 实体对象
@@ -35,7 +37,7 @@ public class HbaseTableInfo {
     /**
      * 保存时间
      */
-    private String saveTime;
+    private Date saveTime;
 
     /**
      * 业务部门
@@ -55,7 +57,7 @@ public class HbaseTableInfo {
     /**
      * 创建日期
      */
-    private String createDate;
+    private Date createDate;
 
 
     public String getClusterName() {
@@ -90,11 +92,11 @@ public class HbaseTableInfo {
         this.columnFamilyName = columnFamilyName;
     }
 
-    public String getSaveTime() {
+    public Date getSaveTime() {
         return saveTime;
     }
 
-    public void setSaveTime(String saveTime) {
+    public void setSaveTime(Date saveTime) {
         this.saveTime = saveTime;
     }
 
@@ -122,11 +124,11 @@ public class HbaseTableInfo {
         this.sampleData = sampleData;
     }
 
-    public String getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(String createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 }

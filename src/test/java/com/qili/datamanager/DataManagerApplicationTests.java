@@ -102,7 +102,11 @@ class DataManagerApplicationTests {
     public void listTables() throws IOException {
         init();
         for (TableName table : admin.listTableNames()) {
-            System.out.println(table);
+
+            String namespace = Bytes.toString(table.getNamespace());
+            String tName = Bytes.toString(table.getName());
+
+            System.out.println("namespace:" + namespace + "--" + "tName:" + tName);
         }
         close();
     }
@@ -293,10 +297,9 @@ class DataManagerApplicationTests {
 
     /**
      * 获取指定记录数据
-     *  多版本命令：
-     *      修改表结构：alter 'student',{NAME=>'course',VERSIONS=>3}
-     *      获取数据：  get 'student','r3',{COLUMN=>'course:chinese',VERSIONS=>3}
-     *
+     * 多版本命令：
+     * 修改表结构：alter 'student',{NAME=>'course',VERSIONS=>3}
+     * 获取数据：  get 'student','r3',{COLUMN=>'course:chinese',VERSIONS=>3}
      * @throws Exception
      */
     @Test
@@ -326,7 +329,7 @@ class DataManagerApplicationTests {
      * @throws IOException
      */
     @Test
-    public  void  testUtil() throws IOException {
+    public void testUtil() throws IOException {
         HbaseTableInfo tableInfo = new HbaseTableInfo();
         tableInfo.setTableName("test2");
         HBaseApiUtils.createSchemaTables(tableInfo);

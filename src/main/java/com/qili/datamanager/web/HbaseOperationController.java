@@ -8,12 +8,10 @@ import com.qili.datamanager.vo.HbaseTableInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @Author: wuyong
@@ -28,7 +26,7 @@ public class HbaseOperationController {
 
     @PostMapping("/saveTableInfo")
     public BeanResult<Void> queryDailyVideo(@RequestBody @Validated HbaseTableInfo request) throws IOException {
-        logger.info("=== Hbase Operation  params {} ===", JSON.toJSONString(request));
+        logger.info("=== Hbase Operation saveTableInfo  params {} ===", JSON.toJSONString(request));
 
         // Create table
         boolean schemaTables = HBaseApiUtils.createSchemaTables(request);
@@ -37,6 +35,16 @@ public class HbaseOperationController {
             return new BeanResult<Void>(CommonStatusEnum.SUCCESS.getCode(), CommonStatusEnum.SUCCESS.getValue());
         }
         return new BeanResult<Void>(CommonStatusEnum.FAIL.getCode(), CommonStatusEnum.FAIL.getValue());
+    }
+
+
+    @GetMapping("/listTables")
+    public BeanResult<List<HbaseTableInfo>> listTables() throws IOException {
+
+        // list table
+        List<HbaseTableInfo> tableInfoList = HBaseApiUtils.listTables();
+
+        return new BeanResult(tableInfoList);
     }
 
 }

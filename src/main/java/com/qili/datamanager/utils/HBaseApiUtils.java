@@ -1,16 +1,19 @@
 package com.qili.datamanager.utils;
 
+import com.google.common.collect.Lists;
 import com.qili.datamanager.vo.HbaseTableInfo;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.util.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,6 +60,48 @@ public class HBaseApiUtils {
 
     }
 
+    /**
+     * 列出数据库中所有的表
+     * @throws IOException
+     */
+    public static List<HbaseTableInfo> listTables() throws IOException {
+
+        Admin admin = init(zkQuorum, zkZnode, zkPort);
+
+        List<HbaseTableInfo> tableInfoList = Lists.newArrayList();
+        for (TableName table : admin.listTableNames()) {
+            ColumnFamilyDescriptor[] columnFamilies = admin.getDescriptor(TableName.valueOf(table.getName())).getColumnFamilies();
+            for (ColumnFamilyDescriptor colFamily : columnFamilies) {
+                System.out.println("-------");
+            }
+
+            HbaseTableInfo tableInfo = new HbaseTableInfo();
+            tableInfo.setClusterName("华为服务器01");
+            tableInfo.setSaveTime(new Date());
+            tableInfo.setBusinessDepart("研发部");
+            tableInfo.setManager("admin");
+            tableInfo.setSampleData("暂无样本数据");
+            tableInfo.setCreateDate(new Date());
+
+            // 命名空间
+            String namespace = Bytes.toString(table.getNamespace());
+            // 表名
+            // 列族
+            byte[] qualifier = table.getQualifier();
+            String columnFamilyName = Bytes.toString(qualifier);
+
+            String tName = Bytes.toString(table.getName());
+            tableInfo.setNamespace(namespace);
+            tableInfo.setTableName(tName);
+            tableInfo.setTableName(columnFamilyName);
+
+            tableInfoList.add(tableInfo);
+
+        }
+        close();
+
+        return tableInfoList;
+    }
 
     /**
      * 创建表结构
