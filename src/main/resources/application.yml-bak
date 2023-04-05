@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: data-manager
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      config:
+        server-addr: ${nacos.server:114.115.138.227:8848}
+        namespace: ${nacos.namespace:dev}
+        file-extension: yaml
+        group: DEFAULT_GROUP
+      discovery:
+        server-addr: ${nacos.server:114.115.138.227:8848}
+        namespace: ${nacos.namespace:dev}
+management:
+  metrics:
+    tags:
+      application: "${spring.application.name}"

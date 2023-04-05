@@ -1,8 +1,6 @@
 package com.qili.datamanager.vo;
 
-
-import jakarta.validation.constraints.NotBlank;
-
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 /**

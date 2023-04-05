@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: data-manager
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 114.115.138.227:8848
+      config:
+        server-addr: 114.115.138.227:8848
+        #nacos的完整格式: ${prefix}-${spring.profiles.active}.${file-extension}
+        #优先级最高
+        #prefix 默认为 spring.application.name 的值
+        file-extension: yaml
+        prefix: data-manager
+        namespace: 6bc513b6-aafa-4b65-9c2f-62e0008e1d09
+        group: DEFAULT_GROUP
+  profiles:
+    active: dev
